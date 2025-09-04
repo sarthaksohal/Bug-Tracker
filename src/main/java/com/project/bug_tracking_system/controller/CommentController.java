@@ -13,7 +13,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/comment")
-@CrossOrigin(origins = "https://bug-tracker-front-end.vercel.app/")
+@CrossOrigin(origins = "https://bug-tracker-front-end.vercel.app")
 public class CommentController {
 
     @Autowired
