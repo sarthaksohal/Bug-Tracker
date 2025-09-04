@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: bug-tracking-system
+    env: docker
+    plan: free
+    autoDeploy: true
+    region: oregon
+    dockerfilePath: ./Dockerfile
+    envVars:
+      - key: PORT
+        value: 8080

@@ -64,7 +64,7 @@ public class ProjectService {
     }
 
     public String assignProjectToUser(ProjectToUserDto projectToUserDto) {
-        User addingUser = userRepository.findById(projectToUserDto.getAssignedById()).get();
+        User addingUser = userRepository.findById(projectToUserDto.getAssignedBy()).get();
         if (addingUser.getUserRole().equals(UserRole.ADMIN) || addingUser.getUserRole().equals(UserRole.MANAGER)) {
             List<String> projectIds = projectToUserDto.getProjectIds();
             User user1 = userRepository.findByEmail(projectToUserDto.getEmail());

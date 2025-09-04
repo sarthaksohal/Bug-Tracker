@@ -9,5 +9,5 @@ public class ProjectToUserDto {
     private List<String> projectIds;
     private String email;
     private UserRole role;
-    private int assignedById;
+    private int assignedBy;
 }
