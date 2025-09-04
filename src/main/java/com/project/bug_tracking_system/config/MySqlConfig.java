@@ -13,9 +13,9 @@ public class MySqlConfig {
     public DataSource dataSource() {
         return DataSourceBuilder.create()
                 .driverClassName("com.mysql.cj.jdbc.Driver")
-                .url("jdbc:mysql://localhost:3306/bugsystem?useSSL=false&serverTimezone=UTC")
+                .url("jdbc:mysql://shortline.proxy.rlwy.net:19301/railway?useSSL=false&allowPublicKeyRetrieval=true")
                 .username("root")
-                .password("12345678")
+                .password("ONurHvKrCjZIcFdoCnoNvcLElJvrrrAr")
                 .build();
     }
 }
