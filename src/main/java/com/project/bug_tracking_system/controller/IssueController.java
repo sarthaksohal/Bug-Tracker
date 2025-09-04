@@ -13,7 +13,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/issue")
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "https://bug-tracker-front-end.vercel.app")
 public class IssueController {
 
     @Autowired
