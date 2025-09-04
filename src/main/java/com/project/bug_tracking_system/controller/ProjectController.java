@@ -14,7 +14,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/project")
-@CrossOrigin(origins = "https://bug-tracker-front-end.vercel.app")
+@CrossOrigin(origins = "https://bug-tracker-front-end.vercel.app", allowCredentials = "true")
 public class ProjectController {
 
     @Autowired

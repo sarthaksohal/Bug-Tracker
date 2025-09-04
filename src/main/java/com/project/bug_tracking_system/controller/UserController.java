@@ -13,7 +13,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/user")
-@CrossOrigin(origins = "https:/bug-tracker-6-wfaz.onrender.com")
+@CrossOrigin(origins = "https://bug-tracker-front-end.vercel.app", allowCredentials = "true")
 public class UserController {
 
     @Autowired
