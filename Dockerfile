@@ -1,25 +1,30 @@
+# Use OpenJDK 21 as build stage
 FROM eclipse-temurin:21-jdk AS build
+
+# Set working directory
 WORKDIR /app
 
-# Copy Maven wrapper and pom.xml
+# Copy mvnw and pom.xml first (for dependency caching)
 COPY mvnw .
 COPY .mvn .mvn
 COPY pom.xml .
 
+# Fix permission issue for mvnw
+RUN chmod +x mvnw
+
+# Download dependencies
 RUN ./mvnw dependency:go-offline -B
 
-# Copy source
-COPY src ./src
+# Copy the rest of the project
+COPY src src
 
-# Build the JAR
-RUN ./mvnw clean package -DskipTests
+# Package the application
+RUN ./mvnw package -DskipTests
 
-# ---------------------------
-# Runtime
-# ---------------------------
-FROM eclipse-temurin:21-jdk
+# Runtime image
+FROM eclipse-temurin:21-jre
+
 WORKDIR /app
-
 COPY --from=build /app/target/*.jar app.jar
 
 EXPOSE 8080
