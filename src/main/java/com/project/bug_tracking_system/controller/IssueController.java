@@ -13,7 +13,8 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/issue")
-@CrossOrigin(origins = "https://bug-tracker-front-end.vercel.app", allowCredentials = "true")
+@CrossOrigin(origins = "http://localhost:3000",allowCredentials = "true")
+
 public class IssueController {
 
     @Autowired
@@ -54,8 +55,9 @@ public class IssueController {
         return issueService.updateIssueStatus(issueId, userId, status);
     }
 
-    @DeleteMapping("/delete")
-    public ResponseEntity<String> deleteIssue(@RequestBody DeleteIssueDto deleteIssueDto) {
-        return issueService.deleteIssue(deleteIssueDto);
+    @DeleteMapping("/delete/{issueId}")
+    public ResponseEntity<String> deleteIssue(@PathVariable int issueId,@RequestParam int userId) {
+
+        return issueService.deleteIssue(issueId,userId);
     }
 }

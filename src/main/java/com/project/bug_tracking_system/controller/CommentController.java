@@ -13,7 +13,8 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/comment")
-@CrossOrigin(origins = "https://bug-tracker-front-end.vercel.app", allowCredentials = "true")
+//@CrossOrigin(origins = "https://bug-tracker-front-end.vercel.app", allowCredentials = "true")
+@CrossOrigin(origins = "http://localhost:3000",allowCredentials = "true")
 public class CommentController {
 
     @Autowired

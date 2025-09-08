@@ -1,9 +1,13 @@
 package com.project.bug_tracking_system.service;
 
+import com.project.bug_tracking_system.entity.Project;
 import com.project.bug_tracking_system.entity.User;
 import com.project.bug_tracking_system.entity.dto.UserDto;
+import com.project.bug_tracking_system.repository.ProjectRepository;
 import com.project.bug_tracking_system.repository.UserRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -13,7 +17,8 @@ import java.util.List;
 public class UserService {
 @Autowired
     private UserRepository userRepository;
-
+@Autowired
+private ProjectRepository projectRepository;
     public List<User> getAllUser() {
         return userRepository.findAll();
     }
@@ -57,8 +62,32 @@ public class UserService {
         return ResponseEntity.ok("saved successfully");
     }
 
+    @Transactional
     public ResponseEntity<String> deleteUser(String emailId) {
-        userRepository.deleteByEmail(emailId);
-        return ResponseEntity.ok("deleted successfully");
+        // Find the user
+        User user = userRepository.findByEmail(emailId);
+        if (user == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
+        }
+
+        // Remove user from projects where they are participants
+        List<Project> participatingProjects = user.getProjectList();
+        for (Project project : participatingProjects) {
+            project.getUserArrayList().remove(user); // ManyToMany list
+            projectRepository.save(project);
+        }
+
+        // Optionally: set 'createdBy' in projects to null if the user created projects
+        List<Project> createdProjects = user.getProjectList();
+        for (Project project : createdProjects) {
+            project.setCreatedBy(null); // requires nullable createdBy column
+            projectRepository.save(project);
+        }
+
+        // Finally delete the user
+        userRepository.delete(user);
+
+        return ResponseEntity.ok("User deleted successfully, projects preserved");
     }
+
 }

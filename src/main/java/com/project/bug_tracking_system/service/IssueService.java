@@ -44,6 +44,8 @@ public class IssueService {
                     .title(issueDto.getTitle())
                     .description((issueDto.getDescription()))
                     .reporter(user)
+                    .status(issueDto.getStatus())
+                    .severity(issueDto.getSeverity())
                     .project(project)
                     .build();
             issueRepository.save(issue);
@@ -106,10 +108,10 @@ public class IssueService {
         return new ResponseEntity<>("Issue status updated to " + newStatus, HttpStatus.OK);
     }
 
-    public ResponseEntity<String> deleteIssue(DeleteIssueDto deleteIssueDto) {
-        Issue issue = issueRepository.findById(deleteIssueDto.getIssueId()).get();
+    public ResponseEntity<String> deleteIssue(int issueId,int userId) {
+        Issue issue = issueRepository.findById(issueId).get();
         Status status = issue.getStatus();
-        User user = userRepository.findById(deleteIssueDto.getUserId()).get();
+        User user = userRepository.findById(userId).get();
         if (user.getUserRole().equals(UserRole.ADMIN) && status.equals(Status.CLOSED)) {
             issueRepository.delete(issue);
             return new ResponseEntity<>("deleted issue successfully", HttpStatus.OK);

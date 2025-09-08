@@ -42,11 +42,11 @@ public class User {
     private List<Project> projectList=new ArrayList<>();
 
     @JsonIgnore
-    @OneToMany(mappedBy = "reporter")
+    @OneToMany(mappedBy = "reporter",cascade = CascadeType.ALL,orphanRemoval = true)
     private List<Issue> issueList=new ArrayList<>();
 
     @JsonIgnore
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user",cascade = CascadeType.ALL,orphanRemoval = true)
     private List<Comment> commentList=new ArrayList<>();
 
     @JsonIgnore
@@ -54,7 +54,7 @@ public class User {
     private List<Project> projects=new ArrayList<>();
 
     @JsonIgnore
-    @OneToMany(mappedBy = "assignee")
+    @OneToMany(mappedBy = "assignee",cascade = CascadeType.ALL,orphanRemoval = true)
     private List<Issue> issues=new ArrayList<>();
 
 }

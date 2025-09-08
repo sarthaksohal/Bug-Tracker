@@ -5,6 +5,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import java.lang.reflect.Array;
 import java.time.LocalDateTime;
@@ -28,7 +30,8 @@ public class Project {
     private String description;
 
     @ManyToOne
-    @JoinColumn(nullable = false)
+    @JoinColumn(nullable = true)
+    @OnDelete(action = OnDeleteAction.SET_NULL)
     private User createdBy;
 
     @CreationTimestamp
@@ -39,6 +42,6 @@ public class Project {
     private List<User> userArrayList;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "project")
+    @OneToMany(mappedBy = "project",cascade = CascadeType.ALL,orphanRemoval = true)
     private List<Issue> issueList=new ArrayList<>();
 }
